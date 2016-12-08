@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:jee="http://www.springframework.org/schema/jee"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:task="http://www.springframework.org/schema/task"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans 
+                           http://www.springframework.org/schema/beans/spring-beans-3.2.xsd 
+                           http://www.springframework.org/schema/tx 
+                           http://www.springframework.org/schema/tx/spring-tx-3.2.xsd 
+                           http://www.springframework.org/schema/jee 
+                           http://www.springframework.org/schema/jee/spring-jee-3.2.xsd 
+                           http://www.springframework.org/schema/context 
+                           http://www.springframework.org/schema/context/spring-context-3.2.xsd
+                           http://www.springframework.org/schema/aop 
+                           http://www.springframework.org/schema/aop/spring-aop-3.2.xsd
+                           http://www.springframework.org/schema/task 
+                           http://www.springframework.org/schema/task/spring-task-3.2.xsd">
+                           
+                           
+ 
+    <!-- spring基础配置 -->
+    <import resource="classpath*:spring/spring-base.xml" />
+    <!-- 定时任务配置 -->
+    <!-- <import resource="classpath*:spring/spring-quartz.xml" /> -->
+    
+    <!-- dubbo配置 -->
+    <import resource="classpath*:spring/spring-dubbo.xml" />
+    
+    <!-- 服务提供者 -->
+    <import resource="classpath*:dubbo/bean/dubbo-bean.xml" />
+    <import resource="classpath*:dubbo/service/dubbo-service.xml" />
+    
+    <!-- 服务消费者 -->
+    <import resource="classpath*:dubbo/reference/dubbo-reference.xml"/>
+</beans>

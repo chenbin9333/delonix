@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+    <Properties>
+        <!-- 日志存放路径 -->
+        <Property name="LOG_HOME">tomcat/tomcat/tomcat-appcloud/logs/app_cloud</Property>
+        <!-- 历史日志存放路径 -->
+        <Property name="LOG_HIS_HOME">{LOG_HOME}/his</Property>
+        <!-- 单个日志文件大小 -->
+        <Property name="LOG_FILE_SIZE">50MB</Property>
+    </Properties>
+    
+    <Appenders>
+        <!-- 控制台日志 -->
+        <Console name="STDOUT" target="SYSTEM_OUT">
+            <PatternLayout pattern="[%d{dd HH:mm:ss,SSS} %-5p] %t - %m - %l%n"/>
+        </Console>
+        
+        <!-- 日志文件 -->
+        <RollingRandomAccessFile name="FILE"
+                                 fileName="${LOG_HOME}/app_cloud_console.log"
+                                 filePattern="${LOG_HIS_HOME}/$${date:yyyy-MM}/app_cloud-%d{yyyy-MM-dd}-%i.log">
+            <PatternLayout>
+                <Pattern>%d %p %c{1.} [%t] %m%n</Pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy />
+                <SizeBasedTriggeringPolicy size="${LOG_FILE_SIZE}" />
+            </Policies>
+        </RollingRandomAccessFile>
+    </Appenders>
+    
+    <Loggers>
+        <!-- 根日志 -->
+        <Root level="DEBUG">
+            <AppenderRef ref="STDOUT" />
+            <AppenderRef ref="FILE" />
+        </Root>
+        
+        <!-- MyBatis日志, additivity 为 false 不继承根日志，日志级别正式上线调整成 debug -->
+        <!-- 根据实际需求是否加载本地日志 -->
+        <Logger name="com.ztesoft.cloud.dao" level="trace" additivity="false">
+            <AppenderRef ref="STDOUT" />
+            <AppenderRef ref="FILE" />
+        </Logger>
+        <Logger name="com.hn.dao" level="trace" additivity="false">
+            <AppenderRef ref="STDOUT" />
+            <AppenderRef ref="FILE" />
+        </Logger>
+        <Logger name="com.gx.dao" level="trace" additivity="false">
+            <AppenderRef ref="STDOUT" />
+            <AppenderRef ref="FILE" />
+        </Logger>
+    </Loggers>
+</Configuration>

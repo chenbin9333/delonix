@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://java.sun.com/xml/ns/javaee"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+         id="WebApp_AppCloud" version="3.0">
+         
+    <!-- 图标设置 -->
+    <!-- <icon>
+        <small-icon>/images/favorite.ico</small-icon>
+        <large-icon>/images/favorite.ico</large-icon>
+    </icon> -->
+    
+    <!-- 参数设定 -->
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>classpath:spring/spring-all.xml</param-value>
+    </context-param>
+    <context-param>
+        <param-name>webAppRootKey</param-name>
+        <param-value>webapp.root</param-value>
+    </context-param>
+    <context-param>
+        <param-name>log4jConfiguration</param-name>
+        <param-value>classpath:log/log4j2.xml</param-value>
+    </context-param>
+    
+    <!-- 加载spring -->
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+    <!-- 获取web根路径 -->
+    <!-- <listener>
+        <listener-class>com.ztesoft.servlet.WebAppRootKeyListener</listener-class>
+    </listener> -->
+    <!-- 日志、log4j2 -->
+    <listener>
+        <listener-class>org.apache.logging.log4j.web.Log4jServletContextListener</listener-class>
+    </listener>
+   
+    <filter>
+        <filter-name>characterEncodingFilter</filter-name>
+        <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+        <init-param>
+            <param-name>encoding</param-name>
+            <param-value>utf-8</param-value>
+        </init-param>
+        <init-param>
+            <param-name>forceEnCoding</param-name>
+            <param-value>true</param-value>
+        </init-param>
+    </filter>
+    <!-- log4j2 过滤器 -->
+    <filter>
+        <filter-name>log4jServletFilter</filter-name>
+        <filter-class>org.apache.logging.log4j.web.Log4jServletFilter</filter-class>
+    </filter>
+    
+    
+    <!-- log4j -->
+    <filter-mapping>
+        <filter-name>log4jServletFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
+        <dispatcher>INCLUDE</dispatcher>
+        <dispatcher>ERROR</dispatcher>
+    </filter-mapping>
+    
+    
+    <!-- spring mvc -->
+    <servlet>
+        <servlet-name>spring-mvc</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>classpath:spring/spring-mvc.xml</param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    
+    <servlet-mapping>
+    	<servlet-name>spring-mvc</servlet-name>
+    	<url-pattern>/</url-pattern>
+  	</servlet-mapping>
+    
+    <!-- session 超时时间，默认60分钟 -->
+    <session-config>
+        <session-timeout>60</session-timeout>
+    </session-config>
+    
+    <!-- 类型配置 -->
+    <mime-mapping>
+        <extension>apk</extension>
+        <mime-type>application/vnd.android.package-archive</mime-type>
+    </mime-mapping>
+    <mime-mapping>
+        <extension>ipa</extension>
+        <mime-type>application/vnd.iphone</mime-type>
+    </mime-mapping>	
+    
+    <!-- 错误页 -->
+    <error-page>
+        <error-code>500</error-code>
+        <location>/page/public/500.jsp</location>
+    </error-page>
+    <error-page>
+        <error-code>404</error-code>
+        <location>/page/public/404.jsp</location>
+    </error-page>
+    <error-page>
+        <error-code>403</error-code>
+        <location>/page/public/403.jsp</location>
+    </error-page>
+    
+    <!-- 首页 -->
+    <welcome-file-list>
+        <welcome-file>index.jsp</welcome-file>
+    </welcome-file-list>
+</web-app>
